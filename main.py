@@ -1,7 +1,7 @@
 import cmd
 from inspect import getdoc
 
-from dice import roll
+from dice import roll, record, stats
 
 
 class DiceShell(cmd.Cmd):
@@ -13,13 +13,18 @@ class DiceShell(cmd.Cmd):
         try:
             params = parse(arg)
             assert len(params) == 2
-            print(roll(*params))
+            results = roll(*params)
+            record(results.results)
+            print(results)
         except ValueError:
             print("Unable to parse integer arguments")
             print(getdoc(self.do_roll))
         except AssertionError:
             print("Incorrect number of arguments")
             print(getdoc(self.do_roll))
+
+    def do_stats(self, arg):
+        print(stats())
 
     def do_exit(self, arg):
         """Say goodbye and exit"""

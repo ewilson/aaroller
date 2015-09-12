@@ -1,5 +1,5 @@
 from random import randint
-
+from collections import Counter
 
 def roll(number, hit_level):
     rolls = [Roll(hit_level) for _ in range(number)]
@@ -28,17 +28,14 @@ class Results(object):
         return "Hits: %s\n%s" % (self.count, roll_str if len(self.results) < 25 else '')
 
 
-def get_input():
-    while True:
-        input_str = input('>> ').strip()
-        if input_str[0].lower() == 'q':
-            exit()
-        try:
-            return [int(s) for s in input_str.split(' ')]
-        except ValueError:
-            print('>%s< is invalid input.' % input_str)
+all_results = Counter()
 
-if __name__ == '__main__':
-    while True:
-        dice, level = get_input()
-        print(roll(dice, level))
+
+def record(results):
+    global all_results
+    all_results.update([r.num for r in results])
+
+
+def stats():
+    global all_results
+    return all_results
