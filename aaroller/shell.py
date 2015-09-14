@@ -20,8 +20,8 @@ class DiceShell(cmd.Cmd):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""
         try:
             args = arg.split()
+            assert len(args) == 2
             params = int(args[0]), int(args[1])
-            assert len(params) == 2
             results = roll(*params)
             record(results.results, player)
             print(results)
@@ -49,10 +49,3 @@ class DiceShell(cmd.Cmd):
         """Say goodbye and exit"""
         print('Goodbye.')
         return True
-
-
-def go():
-    DiceShell().cmdloop()
-
-if __name__ == '__main__':
-    go()
