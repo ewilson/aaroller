@@ -1,9 +1,13 @@
 # aaroller
 command line dice roller for axis &amp; allies
 
-### How to use:
+### Installing
 
-    $ python3 main.py
+    $ python3 setup.py install
+
+### Running:
+
+    $ python3 -m aaroller
     >> a_roll 12 2
     Hits: 3
     Rolls:  3  5 [1][1][1] 6  3  3  5  4  4  6 
