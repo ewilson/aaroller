@@ -34,21 +34,18 @@ class Results(object):
 class Stat(object):
 
     def __init__(self, player):
-        self.rolls = []
         self.player = player
+        self.rolls, self.exp, self.act = 0, 0, 0
 
     def update(self, results):
-        self.rolls.extend(results)
-
-    def find_exp_act(self):
-        expected = sum([r.hit_level for r in self.rolls])/6
-        actual = [r.hit for r in self.rolls].count(True)
-        return expected, actual, len(self.rolls)
+        self.rolls += len(results)
+        self.exp += sum([r.hit_level for r in results])/6
+        self.act += [r.hit for r in results].count(True)
 
     def stat_line(self):
-        exp, act, num = self.find_exp_act()
+        luck = (self.act - self.exp)*100/self.rolls
         return '%6s>> Expected Hits: %6.1f, Hits: %4d, Rolls: %4d, Luck %%: %5.1f%%' %\
-               (self.player, exp, act, num, (act - exp)*100/num)
+               (self.player, self.exp, self.act, self.rolls, luck)
 
 
 all_results = {}
