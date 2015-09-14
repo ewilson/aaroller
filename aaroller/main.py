@@ -1,7 +1,7 @@
 import cmd
 from inspect import getdoc
 
-from dice import roll, record, stats, stat_reset
+from aaroller.dice import roll, record, stats, stat_reset
 
 
 class DiceShell(cmd.Cmd):
@@ -51,5 +51,8 @@ class DiceShell(cmd.Cmd):
         return True
 
 
-if __name__ == '__main__':
+def go():
     DiceShell().cmdloop()
+
+if __name__ == '__main__':
+    go()
