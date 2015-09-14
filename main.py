@@ -10,11 +10,11 @@ class DiceShell(cmd.Cmd):
 
     def do_x_roll(self, arg):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""
-        self._do_roll(arg, 'x')
+        self._do_roll(arg, 'Axis')
 
     def do_a_roll(self, arg):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""
-        self._do_roll(arg, 'a')
+        self._do_roll(arg, 'Allies')
 
     def _do_roll(self, arg, player):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""

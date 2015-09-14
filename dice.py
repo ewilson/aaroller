@@ -1,7 +1,5 @@
 from random import randint
 
-NUM_SIDES = 6
-
 
 def roll(number, hit_level):
     rolls = [Roll(hit_level) for _ in range(number)]
@@ -11,7 +9,7 @@ def roll(number, hit_level):
 class Roll(object):
 
     def __init__(self, hit_level):
-        self.num = randint(1,NUM_SIDES)
+        self.num = randint(1,6)
         self.hit_level = hit_level
         self.hit = self.num <= self.hit_level
 
@@ -43,17 +41,18 @@ class Stat(object):
         self.rolls.extend(results)
 
     def find_exp_act(self):
-        expected = sum([r.hit_level/NUM_SIDES for r in self.rolls])
+        expected = sum([r.hit_level for r in self.rolls])/6
         actual = [r.hit for r in self.rolls].count(True)
         return expected, actual, len(self.rolls)
 
     def stat_line(self):
         exp, act, num = self.find_exp_act()
-        return '%s) Expected Hits: %6.1f, Hits: %4d, Rolls: %4d, Luck %%: %5.1f%%' %\
+        return '%6s>> Expected Hits: %6.1f, Hits: %4d, Rolls: %4d, Luck %%: %5.1f%%' %\
                (self.player, exp, act, num, (act - exp)*100/num)
 
 
 all_results = {}
+
 
 def record(results, player):
     global all_results
