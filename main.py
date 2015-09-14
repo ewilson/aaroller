@@ -1,7 +1,7 @@
 import cmd
 from inspect import getdoc
 
-from dice import roll, record, stats
+from dice import roll, record, stats, stat_reset
 
 
 class DiceShell(cmd.Cmd):
@@ -19,7 +19,8 @@ class DiceShell(cmd.Cmd):
     def _do_roll(self, arg, player):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""
         try:
-            params = parse(arg)
+            args = arg.split()
+            params = int(args[0]), int(args[1])
             assert len(params) == 2
             results = roll(*params)
             record(results.results, player)
@@ -32,19 +33,23 @@ class DiceShell(cmd.Cmd):
             print(getdoc(self._do_roll))
 
     def do_stats(self, arg):
-        stat_lines = '\n'.join(line for line in stats())
-        print(stat_lines)
+        """Gives summary of all rolls so far"""
+        if arg == "reset":
+            stat_reset()
+        else:
+            stat_lines = '\n'.join(line for line in stats())
+            print(stat_lines)
 
     def do_exit(self, arg):
         """Say goodbye and exit"""
         print('Goodbye.')
-        exit()
+        return True
 
+    def do_EOF(self, arg):
+        """Say goodbye and exit"""
+        print('Goodbye.')
+        return True
 
-def parse(arg):
-    """Convert a series of zero or more numbers to an argument tuple"""
-    args = arg.split()
-    return int(args[0]), int(args[1])
 
 if __name__ == '__main__':
     DiceShell().cmdloop()
