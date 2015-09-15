@@ -49,3 +49,7 @@ class DiceShell(cmd.Cmd):
         """Say goodbye and exit"""
         print('Goodbye.')
         return True
+
+
+def main():
+    DiceShell().cmdloop()

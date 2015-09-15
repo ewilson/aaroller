@@ -8,4 +8,8 @@ setup(name='aaroller',
       author_email='wilson.eric.n@gmail.com',
       license='MIT',
       packages=['aaroller'],
-      zip_safe=False)
+      zip_safe=False,
+      entry_points = {
+            'console_scripts': ['aaroller=aaroller.shell:main'],
+      }
+    )
