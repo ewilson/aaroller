@@ -7,7 +7,7 @@ command line dice roller for axis &amp; allies
 
 ### Running:
 
-    $ python3 -m aaroller
+    $ aaroller
     >> a_roll 12 2
     Hits: 3
     Rolls:  3  5 [1][1][1] 6  3  3  5  4  4  6 
