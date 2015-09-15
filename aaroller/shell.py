@@ -1,7 +1,7 @@
 import cmd
 from inspect import getdoc
 
-from aaroller.dice import roll, record, stats, stat_reset
+from aaroller.dice import roll, record, stats, stat_reset, save, retrieve
 
 
 class DiceShell(cmd.Cmd):
@@ -39,6 +39,16 @@ class DiceShell(cmd.Cmd):
         else:
             stat_lines = '\n'.join(line for line in stats())
             print(stat_lines)
+
+    def do_save(self, arg):
+        """Saves current stats with name given"""
+        assert len(arg) > 0 and ' ' not in arg
+        save(arg)
+
+    def do_open(self, arg):
+        """Retrieves named stats"""
+        assert len(arg) > 0 and ' ' not in arg
+        retrieve(arg)
 
     def do_exit(self, arg):
         """Say goodbye and exit"""

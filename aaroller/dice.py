@@ -1,5 +1,5 @@
 from random import randint
-
+import json
 
 def roll(number, hit_level):
     rolls = [Roll(hit_level) for _ in range(number)]
@@ -66,3 +66,25 @@ def stats():
 def stat_reset():
     global all_results
     all_results = {}
+
+
+def save(filename):
+    global all_results
+    results_dict = {k: {'player': all_results[k].player,
+                        'rolls': all_results[k].rolls,
+                        'exp': all_results[k].exp,
+                        'act': all_results[k].act} for k in all_results}
+    with open(filename + '.json', 'w') as save_file:
+        save_file.write(json.dumps(results_dict))
+
+
+def retrieve(filename):
+    global all_results
+    with open(filename + '.json', 'r') as retrieve_file:
+        stuff = json.loads(retrieve_file.read())
+    for k in stuff:
+        s = Stat(stuff[k]['player'])
+        s.act = stuff[k]['act']
+        s.exp = stuff[k]['exp']
+        s.rolls = stuff[k]['rolls']
+        all_results[k] = s
