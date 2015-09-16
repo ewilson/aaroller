@@ -1,12 +1,14 @@
 import cmd
 from inspect import getdoc
 
+from colorama import Fore
+
 from aaroller.dice import roll, record, stats, stat_reset, save, retrieve
 
 
 class DiceShell(cmd.Cmd):
     intro = """Welcome to simple dice. Type help or ? to list commands.\n"""
-    prompt = '>> '
+    prompt = Fore.BLUE + '>> ' + Fore.RESET
 
     def do_x_roll(self, arg):
         """Roll a number of dice with a hit level. Example: ROLL 10 3"""
@@ -37,6 +39,7 @@ class DiceShell(cmd.Cmd):
         if arg == "reset":
             stat_reset()
         else:
+            print(Fore.BLUE + "          Expected   Hits  Rolls    Luck" + Fore.RESET)
             stat_lines = '\n'.join(line for line in stats())
             print(stat_lines)
 

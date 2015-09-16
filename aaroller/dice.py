@@ -1,6 +1,9 @@
 from random import randint
 import json
 
+from colorama import Fore
+
+
 def roll(number, hit_level):
     rolls = [Roll(hit_level) for _ in range(number)]
     return Results(rolls)
@@ -14,7 +17,7 @@ class Roll(object):
         self.hit = self.num <= self.hit_level
 
     def __str__(self):
-        return '[%s]' % self.num if self.hit else ' %s ' % self.num
+        return '%s[%s]%s' % (Fore.RED, self.num, Fore.RESET) if self.hit else ' %s ' % self.num
 
     def __repr__(self):
         return '<num: %d, hit_level: %d, hit: %s>' % (self.num, self.hit_level, self.hit)
@@ -28,7 +31,7 @@ class Results(object):
 
     def __str__(self):
         roll_str = "Rolls: %s" % ''.join([str(r) for r in self.results])
-        return "Hits: %s\n%s" % (self.count, roll_str if len(self.results) < 25 else '')
+        return "%sHits: %s%s\n%s" % (Fore.GREEN, self.count, Fore.RESET, roll_str if len(self.results) < 25 else '')
 
 
 class Stat(object):
@@ -44,8 +47,16 @@ class Stat(object):
 
     def stat_line(self):
         luck = (self.act - self.exp)*100/self.rolls
-        return '%6s>> Expected Hits: %6.1f, Hits: %4d, Rolls: %4d, Luck %%: %5.1f%%' %\
-               (self.player, self.exp, self.act, self.rolls, luck)
+        if luck > 4:
+            luck_color = Fore.GREEN
+        elif luck < -4:
+            luck_color = Fore.RED
+        else:
+            luck_color = Fore.WHITE
+        return '%s%6s>>%s %9.1f%7d%7d%s%7.1f%%%s' %\
+               (Fore.BLUE, self.player, Fore.RESET,
+                self.exp, self.act, self.rolls,
+                luck_color, luck, Fore.RESET)
 
 
 all_results = {}
